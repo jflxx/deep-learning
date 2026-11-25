@@ -61,6 +61,7 @@ def fig_interno_vs_geo(c2: pd.DataFrame, ruta: str) -> None:
             ax.hlines(media[f"f1_{cond}"], x - 0.11, x + 0.11, color=COLOR[cond], linewidth=2.5, zorder=4)
         ax.annotate(f"Δ = {media['delta']:+.2f} pts", (gi, max(media.f1_base, media.f1_lora) + 0.9),
                     ha="center", color=TXT, fontsize=9)
+    ax.set_ylim(top=ax.get_ylim()[1] + 1.2)
     ax.set_xticks(range(3), [g[2] for g in grupos])
     ax.set_ylabel("macro-F1 (%)")
     ax.set_title("Macro-F1 por conjunto de prueba (3 semillas; línea = media)", color=TXT, loc="left")
