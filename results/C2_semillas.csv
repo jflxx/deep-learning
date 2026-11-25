@@ -1,0 +1,16 @@
+particion,conjunto,semilla,f1_base,f1_lora,delta
+interna,test,42,95.5933,96.7809,1.1875
+interna,test,0,95.8696,97.1907,1.3211
+interna,test,1,95.5039,97.5655,2.0616
+interna,test,media,95.6556,97.1790,1.5234
+interna,test,desv,0.1906,0.3924,0.4708
+geo,test_dentro,42,96.4570,97.1220,0.6650
+geo,test_dentro,0,96.1549,97.4886,1.3337
+geo,test_dentro,1,96.5901,97.3567,0.7666
+geo,test_dentro,media,96.4007,97.3224,0.9218
+geo,test_dentro,desv,0.2230,0.1857,0.3603
+geo,test_fuera,42,89.0871,90.7910,1.7039
+geo,test_fuera,0,88.4639,91.8169,3.3531
+geo,test_fuera,1,90.1959,91.7534,1.5575
+geo,test_fuera,media,89.2490,91.4538,2.2048
+geo,test_fuera,desv,0.8773,0.5748,0.9971

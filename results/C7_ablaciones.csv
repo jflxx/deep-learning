@@ -1,0 +1,9 @@
+experimento,particion,id,variante,f1_dentro,f1_r8_dentro,delta_dentro,f1_fuera,f1_r8_fuera,delta_fuera,caida,caida_r8,delta_caida,f1_test,f1_r8_test,delta_test
+A3,interna,interna_lora_r16_b10-11_q+v_s42,"r=16, bloques 11-12, Q+V",,,,,,,,,,96.8641,96.7809,0.0832
+A3,interna,interna_lora_r4_b10-11_q+v_s42,"r=4, bloques 11-12, Q+V",,,,,,,,,,97.2700,96.7809,0.4891
+A5,interna,interna_lora_r8_b8-9-10-11_q+v_s42,"r=8, bloques 9-10-11-12, Q+V",,,,,,,,,,97.9710,96.7809,1.1901
+A6,interna,interna_lora_r8_b10-11_q_s42,"r=8, bloques 11-12, Q",,,,,,,,,,97.2351,96.7809,0.4542
+A3g,geo,geo_lora_r16_b10-11_q+v_s42,"r=16, bloques 11-12, Q+V",97.7692,97.1220,0.6472,90.9741,90.7910,0.1831,6.7951,6.3310,0.4641,,,
+A3g,geo,geo_lora_r4_b10-11_q+v_s42,"r=4, bloques 11-12, Q+V",96.7753,97.1220,-0.3467,90.5371,90.7910,-0.2539,6.2382,6.3310,-0.0928,,,
+A5g,geo,geo_lora_r8_b8-9-10-11_q+v_s42,"r=8, bloques 9-10-11-12, Q+V",97.9127,97.1220,0.7907,92.2720,90.7910,1.4809,5.6407,6.3310,-0.6903,,,
+A6g,geo,geo_lora_r8_b10-11_q_s42,"r=8, bloques 11-12, Q",97.2259,97.1220,0.1039,90.5969,90.7910,-0.1941,6.6290,6.3310,0.2980,,,

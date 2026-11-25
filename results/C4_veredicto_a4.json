@@ -1,0 +1,17 @@
+{
+  "veredicto": "se_rechaza",
+  "caida_media_base": 7.151693552190082,
+  "caida_media_lora": 5.868640372895125,
+  "caida_desv_base": 0.6753679902245681,
+  "caida_desv_lora": 0.40184824693407256,
+  "ventaja_media_fuera": 2.2048221878061063,
+  "ventaja_desv_fuera": 0.997108916143739,
+  "ventaja_media_dentro": 0.9217690085111485,
+  "ventaja_fuera_por_semilla": {
+    "0": 3.353077769684731,
+    "1": 1.557495833583232,
+    "42": 1.7038929601503554
+  },
+  "signo_consistente": true,
+  "lectura_signo": "LoRA mejor fuera"
+}

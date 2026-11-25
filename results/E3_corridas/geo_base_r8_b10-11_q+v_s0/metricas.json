@@ -1,0 +1,31 @@
+{
+  "id": "geo_base_r8_b10-11_q+v_s0",
+  "experimento": "A4",
+  "particion": "geo",
+  "condicion": "base",
+  "semilla": 0,
+  "rango": 8,
+  "bloques": [
+    10,
+    11
+  ],
+  "proyecciones": [
+    "q",
+    "v"
+  ],
+  "segundos": 4.1,
+  "metricas": {
+    "val": {
+      "accuracy": 0.9467816575515355,
+      "macro_f1": 0.9312805516478713
+    },
+    "test_dentro": {
+      "accuracy": 0.9633333333333334,
+      "macro_f1": 0.961548708283642
+    },
+    "test_fuera": {
+      "accuracy": 0.9094403074705741,
+      "macro_f1": 0.8846385898013912
+    }
+  }
+}

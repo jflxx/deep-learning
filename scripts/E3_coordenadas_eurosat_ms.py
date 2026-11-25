@@ -45,7 +45,9 @@ def procesar_coordenadas(ms_dir: str, ruta_salida: str = "splits/eurosat_coords.
 
     print(f"Encontrados {len(archivos_tif)} archivos GeoTIFF en {ms_dir}")
     if len(archivos_tif) != 27000:
-        print(f"Advertencia: Se esperaban 27,000 archivos pero se encontraron {len(archivos_tif)}")
+        raise SystemExit(f"Se esperaban 27,000 GeoTIFF y se encontraron {len(archivos_tif)}. No se genera el CSV.")
+    if not rgb_dir or not os.path.exists(rgb_dir):
+        raise SystemExit("Falta --rgb-dir (EuroSAT RGB): la verificación RGB <-> MS es obligatoria.")
 
     filas = []
     nombres_ms = set()
@@ -75,12 +77,13 @@ def procesar_coordenadas(ms_dir: str, ruta_salida: str = "splits/eurosat_coords.
 
     df = pd.DataFrame(filas)
 
-    if rgb_dir and os.path.exists(rgb_dir):
-        archivos_rgb = glob(os.path.join(rgb_dir, "**", "*.jpg"), recursive=True)
-        nombres_rgb = {f"{Path(f).parent.name}/{Path(f).stem}" for f in archivos_rgb}
-        print(f"Verificando emparejamiento con {len(nombres_rgb)} archivos RGB...")
-        verificar_emparejamiento(nombres_ms, nombres_rgb)
-        print("Emparejamiento perfecto MS <-> RGB verificado.")
+    archivos_rgb = glob(os.path.join(rgb_dir, "**", "*.jpg"), recursive=True)
+    nombres_rgb = {f"{Path(f).parent.name}/{Path(f).stem}" for f in archivos_rgb}
+    print(f"Verificando emparejamiento con {len(nombres_rgb)} archivos RGB...")
+    verificar_emparejamiento(nombres_ms, nombres_rgb)
+    print("Emparejamiento perfecto MS <-> RGB verificado.")
+    duplicadas = df.duplicated(subset=["lon", "lat"]).sum()
+    print(f"Coordenadas repetidas (mismo centro en dos archivos): {duplicadas}")
 
     os.makedirs(os.path.dirname(ruta_salida), exist_ok=True)
     df.to_csv(ruta_salida, index=False)

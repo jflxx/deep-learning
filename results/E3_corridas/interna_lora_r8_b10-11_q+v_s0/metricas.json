@@ -1,0 +1,27 @@
+{
+  "id": "interna_lora_r8_b10-11_q+v_s0",
+  "experimento": "A2",
+  "particion": "interna",
+  "condicion": "lora",
+  "semilla": 0,
+  "rango": 8,
+  "bloques": [
+    10,
+    11
+  ],
+  "proyecciones": [
+    "q",
+    "v"
+  ],
+  "segundos": 579.6,
+  "metricas": {
+    "val": {
+      "accuracy": 0.9735802469135802,
+      "macro_f1": 0.9726264314980428
+    },
+    "test": {
+      "accuracy": 0.9730864197530864,
+      "macro_f1": 0.9719069692757394
+    }
+  }
+}
