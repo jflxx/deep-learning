@@ -1,0 +1,4 @@
+conjunto,lora_original,lora_corregida,diferencia,base,ventaja_original,ventaja_corregida
+val,95.19,95.05,-0.15,93.16,2.03,1.88
+test_dentro,97.12,97.58,0.46,96.46,0.67,1.12
+test_fuera,90.79,90.71,-0.08,89.09,1.70,1.63

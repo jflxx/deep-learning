@@ -79,40 +79,35 @@ def main():
     print(f"  Test dentro: mín {dist_td['min_km']:.2f} km, mediana {dist_td['mediana_km']:.2f} km")
     print(f"  Test fuera:  mín {dist_tf['min_km']:.2f} km, mediana {dist_tf['mediana_km']:.2f} km")
 
-    # 4. Mapa de regiones
-    colores = {
-        "train": "#1f77b4",        # azul
-        "val": "#ff7f0e",          # naranja
-        "test_dentro": "#2ca02c",  # verde
-        "test_fuera": "#d62728",   # rojo
-    }
+    # 4. Mapa de regiones. "test dentro" es una muestra aleatoria DE las regiones de
+    # entrenamiento, así que se dibuja junto con train (mismo color) para no exagerarlo.
+    capas = [
+        (["train", "test_dentro"], "#b8b8b8", "regiones de entrenamiento (train + test dentro)"),
+        (["val"], "#257de0", "validación"),
+        (["test_fuera"], "#f47230", "test fuera (regiones reservadas)"),
+    ]
 
-    plt.figure(figsize=(12, 8))
-    for cjto, color in colores.items():
-        subset = coords[coords["conjunto"] == cjto]
-        plt.scatter(
-            subset["lon"], subset["lat"],
-            c=color, label=f"{cjto} (n={len(subset)})",
-            alpha=0.6, s=12, edgecolors="none"
-        )
+    plt.figure(figsize=(9, 6.5))
+    for cjtos, color, nombre in capas:
+        subset = coords[coords["conjunto"].isin(cjtos)]
+        plt.scatter(subset["lon"], subset["lat"], c=color, s=6, edgecolors="none",
+                    label=f"{nombre}: {len(subset):,} img")
 
     # Anotar centroides de regiones
     coords["region"] = coords["archivo_rgb"].map(particion["region"])
     for r_id in sorted(coords["region"].unique()):
         sub_r = coords[coords["region"] == r_id]
-        cx = sub_r["lon"].mean()
-        cy = sub_r["lat"].mean()
-        plt.annotate(
-            str(r_id), (cx, cy),
-            fontsize=11, fontweight="bold",
-            bbox=dict(boxstyle="round,pad=0.2", fc="white", ec="black", alpha=0.85)
-        )
+        plt.annotate(str(r_id), (sub_r["lon"].mean(), sub_r["lat"].mean()), xytext=(0, 9), textcoords="offset points", fontsize=8, color="#191919",
+                     ha="center", va="center",
+                     bbox=dict(boxstyle="round,pad=0.15", fc="white", ec="#666666", lw=0.6, alpha=0.9))
 
-    plt.title("Partición geográfica por bloques espaciales (EuroSAT)", fontsize=14, fontweight="bold")
-    plt.xlabel("Longitud (°)", fontsize=11)
-    plt.ylabel("Latitud (°)", fontsize=11)
-    plt.legend(loc="upper right", frameon=True)
-    plt.grid(True, linestyle="--", alpha=0.5)
+    ax = plt.gca()
+    ax.spines[["top", "right"]].set_visible(False)
+    plt.title(f"Partición geográfica: K = {particion['k']} regiones (K-means en EPSG:3035)", fontsize=11, loc="left")
+    plt.xlabel("longitud (°)")
+    plt.ylabel("latitud (°)")
+    plt.legend(loc="upper left", frameon=False, fontsize=8, markerscale=2)
+    plt.grid(True, color="#e6e6e6", linewidth=0.8)
     plt.tight_layout()
 
     os.makedirs(os.path.dirname(args.salida_fig), exist_ok=True)
