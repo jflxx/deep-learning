@@ -1,6 +1,7 @@
 # Datos (se descargan con el notebook; no subir al repositorio)
 data/
 *.zip
+outputs/
 # Cache de embeddings (pesado y regenerable)
 results/features_cache*.pt
 # Entornos y archivos temporales
