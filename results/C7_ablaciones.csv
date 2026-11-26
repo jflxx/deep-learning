@@ -1,21 +1,9 @@
-id,experimento,particion,condicion,semilla,rango,conjunto,accuracy,macro_f1
-geo_lora_r16_b10-11_q+v_s42,A3g,geo,lora,42,16,val,0.9583508624316365,0.9462989130075975
-geo_lora_r16_b10-11_q+v_s42,A3g,geo,lora,42,16,test_dentro,0.9785185185185186,0.9776921291236093
-geo_lora_r16_b10-11_q+v_s42,A3g,geo,lora,42,16,test_fuera,0.9317799663704059,0.9097409241830707
-geo_lora_r4_b10-11_q+v_s42,A3g,geo,lora,42,4,val,0.9629785443836769,0.9507459834160314
-geo_lora_r4_b10-11_q+v_s42,A3g,geo,lora,42,4,test_dentro,0.9685185185185186,0.9677528191608701
-geo_lora_r4_b10-11_q+v_s42,A3g,geo,lora,42,4,test_fuera,0.9300984866682681,0.905370917802324
-geo_lora_r8_b10-11_q_s42,A6g,geo,lora,42,8,val,0.9570887673538073,0.9435278564383605
-geo_lora_r8_b10-11_q_s42,A6g,geo,lora,42,8,test_dentro,0.9733333333333334,0.9722592473194647
-geo_lora_r8_b10-11_q_s42,A6g,geo,lora,42,8,test_fuera,0.9279365841940908,0.9059694400153828
-geo_lora_r8_b8-9-10-11_q+v_s42,A5g,geo,lora,42,8,val,0.9638199411022297,0.9485622898139676
-geo_lora_r8_b8-9-10-11_q+v_s42,A5g,geo,lora,42,8,test_dentro,0.98,0.9791267350901449
-geo_lora_r8_b8-9-10-11_q+v_s42,A5g,geo,lora,42,8,test_fuera,0.9488349747778044,0.9227197497978441
-interna_lora_r16_b10-11_q+v_s42,A3,interna,lora,42,16,val,0.9733333333333334,0.9722666133692422
-interna_lora_r16_b10-11_q+v_s42,A3,interna,lora,42,16,test,0.9703703703703703,0.9686408443794606
-interna_lora_r4_b10-11_q+v_s42,A3,interna,lora,42,4,val,0.9750617283950618,0.9742838793274263
-interna_lora_r4_b10-11_q+v_s42,A3,interna,lora,42,4,test,0.9740740740740741,0.9726996044956369
-interna_lora_r8_b10-11_q_s42,A6,interna,lora,42,8,val,0.9735802469135802,0.9726406362469747
-interna_lora_r8_b10-11_q_s42,A6,interna,lora,42,8,test,0.9733333333333334,0.9723506650322964
-interna_lora_r8_b8-9-10-11_q+v_s42,A5,interna,lora,42,8,val,0.9795061728395061,0.9788308358318746
-interna_lora_r8_b8-9-10-11_q+v_s42,A5,interna,lora,42,8,test,0.9804938271604938,0.979709729226666
+experimento,particion,id,variante,f1_dentro,f1_r8_dentro,delta_dentro,f1_fuera,f1_r8_fuera,delta_fuera,caida,caida_r8,delta_caida,f1_test,f1_r8_test,delta_test
+A3,interna,interna_lora_r16_b10-11_q+v_s42,"r=16, bloques 11-12, Q+V",,,,,,,,,,96.8641,96.7809,0.0832
+A3,interna,interna_lora_r4_b10-11_q+v_s42,"r=4, bloques 11-12, Q+V",,,,,,,,,,97.2700,96.7809,0.4891
+A5,interna,interna_lora_r8_b8-9-10-11_q+v_s42,"r=8, bloques 9-10-11-12, Q+V",,,,,,,,,,97.9710,96.7809,1.1901
+A6,interna,interna_lora_r8_b10-11_q_s42,"r=8, bloques 11-12, Q",,,,,,,,,,97.2351,96.7809,0.4542
+A3g,geo,geo_lora_r16_b10-11_q+v_s42,"r=16, bloques 11-12, Q+V",97.7692,97.1220,0.6472,90.9741,90.7910,0.1831,6.7951,6.3310,0.4641,,,
+A3g,geo,geo_lora_r4_b10-11_q+v_s42,"r=4, bloques 11-12, Q+V",96.7753,97.1220,-0.3467,90.5371,90.7910,-0.2539,6.2382,6.3310,-0.0928,,,
+A5g,geo,geo_lora_r8_b8-9-10-11_q+v_s42,"r=8, bloques 9-10-11-12, Q+V",97.9127,97.1220,0.7907,92.2720,90.7910,1.4809,5.6407,6.3310,-0.6903,,,
+A6g,geo,geo_lora_r8_b10-11_q_s42,"r=8, bloques 11-12, Q",97.2259,97.1220,0.1039,90.5969,90.7910,-0.1941,6.6290,6.3310,0.2980,,,

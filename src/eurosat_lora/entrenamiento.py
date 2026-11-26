@@ -154,6 +154,9 @@ def entrenar_lora(
     optimizador = torch.optim.AdamW(params_entrenables, lr=cfg.lr, weight_decay=cfg.weight_decay)
     criterio = nn.CrossEntropyLoss()
     use_amp = amp and device == "cuda" and torch.cuda.is_available()
+    # Como en el E2: escalar la pérdida en fp16 para que los gradientes pequeños
+    # (B arranca en 0) no se redondeen a cero.
+    scaler = torch.amp.GradScaler("cuda", enabled=use_amp)
 
     historial = []
     mejor_f1 = -1.0
@@ -179,8 +182,9 @@ def entrenar_lora(
                 logits = cabeza(rep)
                 loss = criterio(logits, y_b)
 
-            loss.backward()
-            optimizador.step()
+            scaler.scale(loss).backward()
+            scaler.step(optimizador)
+            scaler.update()
             total_loss += loss.item()
             n_batches += 1
 

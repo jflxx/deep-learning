@@ -1,0 +1,7 @@
+precision,warmup,latencia_mediana_ms,latencia_p10_ms,latencia_p90_ms,gpu
+fp32,5,7.21,6.99,7.60,Tesla T4
+autocast,5,9.76,9.32,16.31,Tesla T4
+half,5,9.16,8.71,10.54,Tesla T4
+fp32,50,8.67,8.58,8.91,Tesla T4
+autocast,50,12.16,11.76,15.71,Tesla T4
+half,50,7.27,6.56,11.83,Tesla T4

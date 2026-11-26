@@ -1,0 +1,11 @@
+clase,train,val,test_dentro,test_fuera,total
+AnnualCrop,1531,406,269,794,3000
+Forest,968,1051,170,811,3000
+HerbaceousVegetation,1946,309,342,403,3000
+Highway,1536,412,270,282,2500
+Industrial,1416,555,248,281,2500
+Pasture,1471,157,258,114,2000
+PermanentCrop,1568,496,275,161,2500
+Residential,1869,583,328,220,3000
+River,1196,531,210,563,2500
+SeaLake,1882,254,330,534,3000

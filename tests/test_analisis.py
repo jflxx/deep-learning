@@ -50,6 +50,66 @@ def test_a4_signo_inconsistente():
     assert res["signo_consistente"] is False
 
 
+def _escribir_corrida(raiz, experimento, particion, condicion, semilla, f1s, rango=8, bloques=(10, 11), proy=("q", "v")):
+    import json, os
+    id_c = f"{particion}_{condicion}_r{rango}_b{'-'.join(map(str, bloques))}_{'+'.join(proy)}_s{semilla}"
+    os.makedirs(raiz / id_c)
+    m = {k: {"accuracy": v, "macro_f1": v} for k, v in f1s.items()}
+    (raiz / id_c / "metricas.json").write_text(json.dumps({
+        "id": id_c, "experimento": experimento, "particion": particion, "condicion": condicion,
+        "semilla": semilla, "rango": rango, "bloques": list(bloques), "proyecciones": list(proy), "metricas": m}))
+
+
+@pytest.fixture
+def corridas_falsas(tmp_path):
+    for s, (bd, bf, ld, lf) in {42: (0.96, 0.89, 0.97, 0.91), 0: (0.96, 0.88, 0.97, 0.92), 1: (0.97, 0.90, 0.97, 0.92)}.items():
+        _escribir_corrida(tmp_path, "A4", "geo", "base", s, {"val": .9, "test_dentro": bd, "test_fuera": bf})
+        _escribir_corrida(tmp_path, "A4", "geo", "lora", s, {"val": .9, "test_dentro": ld, "test_fuera": lf})
+        _escribir_corrida(tmp_path, "A2", "interna", "base", s, {"val": .9, "test": 0.958})
+        _escribir_corrida(tmp_path, "A2", "interna", "lora", s, {"val": .9, "test": 0.970})
+    # Ablaciones con la misma semilla 42: NO deben entrar en C2/C4
+    _escribir_corrida(tmp_path, "A6g", "geo", "lora", 42, {"val": .9, "test_dentro": 0.50, "test_fuera": 0.40}, proy=("q",))
+    _escribir_corrida(tmp_path, "A3", "interna", "lora", 42, {"val": .9, "test": 0.50}, rango=4)
+    return tmp_path
+
+
+def test_fase_c_en_puntos_y_solo_a4(corridas_falsas):
+    from eurosat_lora.analisis import cargar_corridas, tabla_fase_c
+    t = tabla_fase_c(cargar_corridas(str(corridas_falsas)))
+    fila = t[(t.semilla == 42) & (t.condicion == "lora")].iloc[0]
+    assert fila.f1_dentro == pytest.approx(97.0)
+    assert fila.f1_fuera == pytest.approx(91.0)
+    assert fila.caida == pytest.approx(6.0)
+
+
+def test_veredicto_desde_corridas(corridas_falsas):
+    from eurosat_lora.analisis import cargar_corridas, tabla_fase_c
+    res = veredicto_a4(tabla_fase_c(cargar_corridas(str(corridas_falsas))))
+    # ventaja fuera = [2, 4, 2] pts → media 2.67 ≥ 1.3 → se rechaza; caídas en [3, 10]
+    assert res["ventaja_media_fuera"] == pytest.approx(8 / 3)
+    assert res["veredicto"] == "se_rechaza"
+    assert res["lectura_signo"] == "LoRA mejor fuera"
+
+
+def test_semillas_excluye_ablaciones(corridas_falsas):
+    from eurosat_lora.analisis import cargar_corridas, tabla_semillas
+    t = tabla_semillas(cargar_corridas(str(corridas_falsas)))
+    media = t[(t.particion == "interna") & (t.semilla == "media")].iloc[0]
+    assert media.f1_lora == pytest.approx(97.0)
+    assert media.delta == pytest.approx(1.2)
+
+
+def test_ablaciones_contra_r8(corridas_falsas):
+    from eurosat_lora.analisis import cargar_corridas, tabla_ablaciones
+    t = tabla_ablaciones(cargar_corridas(str(corridas_falsas)))
+    a6g = t[t.experimento == "A6g"].iloc[0]
+    assert a6g.delta_fuera == pytest.approx(40 - 91)
+    assert a6g.caida == pytest.approx(10.0)
+    assert a6g.caida_r8 == pytest.approx(6.0)
+    a3 = t[t.experimento == "A3"].iloc[0]
+    assert a3.delta_test == pytest.approx(50 - 97)
+
+
 def test_norma_tokens_forma(modelo_chico):
     x = torch.randn(2, 3, 28, 28)
     normas = norma_tokens(modelo_chico, x)

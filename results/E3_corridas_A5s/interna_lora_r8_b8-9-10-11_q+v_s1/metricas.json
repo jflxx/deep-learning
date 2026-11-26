@@ -1,0 +1,44 @@
+{
+  "id": "interna_lora_r8_b8-9-10-11_q+v_s1",
+  "experimento": "A5",
+  "particion": "interna",
+  "condicion": "lora",
+  "semilla": 1,
+  "rango": 8,
+  "bloques": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "proyecciones": [
+    "q",
+    "v"
+  ],
+  "segundos": 604.6,
+  "parametros_entrenables": 56842,
+  "config": {
+    "epocas": 8,
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch": 64,
+    "img_size": 224,
+    "amp": true,
+    "grad_scaler": true,
+    "semilla_antes_de_lora": true
+  },
+  "entorno": {
+    "torch": "2.14.1+cu130",
+    "gpu": "Tesla T4"
+  },
+  "metricas": {
+    "val": {
+      "accuracy": 0.9777777777777777,
+      "macro_f1": 0.9769809888059843
+    },
+    "test": {
+      "accuracy": 0.977037037037037,
+      "macro_f1": 0.9763760798486516
+    }
+  }
+}

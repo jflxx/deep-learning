@@ -16,7 +16,7 @@ from torch.utils.data import DataLoader, Subset
 
 from eurosat_lora.config import Config
 from eurosat_lora.metricas import metricas, mcnemar_exacto
-from eurosat_lora.modelo import aplicar_lora, cargar_dinov2
+from eurosat_lora.modelo import aplicar_lora, cargar_dinov2, contar_entrenables, fijar_semilla
 from eurosat_lora.datos import indices_de, cargador
 from eurosat_lora.entrenamiento import (
     extraer_features,
@@ -158,6 +158,9 @@ def ejecutar_corrida(c: Corrida, ctx: Contexto, salida: str) -> dict:
     os.makedirs(carpeta, exist_ok=True)
 
     t0 = time.time()
+    # Como en el E2: fijar la semilla ANTES de crear LoRA, para que la
+    # inicialización de A dependa solo de la semilla de la corrida.
+    fijar_semilla(c.semilla)
     particion = ctx.particiones[c.particion]
     dataset = ctx.dataset
     cfg = ctx.cfg
@@ -201,6 +204,7 @@ def ejecutar_corrida(c: Corrida, ctx: Contexto, salida: str) -> dict:
             "val": ctx.cache_features[clave_cache_va],
         }
         cabeza, hist = entrenar_base(cache_local, n_clases, cfg_corrida, c.semilla, ctx.device)
+        params_entrenables = sum(p.numel() for p in cabeza.parameters())
         hist.to_csv(os.path.join(carpeta, "historial.csv"), index=False)
         torch.save(cabeza.state_dict(), os.path.join(carpeta, "cabeza.pt"))
 
@@ -228,6 +232,7 @@ def ejecutar_corrida(c: Corrida, ctx: Contexto, salida: str) -> dict:
         m = cargar_dinov2(cfg.modelo_id, ctx.device)
         aplicar_lora(m, bloques=c.bloques, proyecciones=c.proyecciones,
                      r=c.rango, alpha=float(c.rango), dropout=0.0)
+        params_lora = contar_entrenables(m)
 
         dl_tr = cargador(dataset, idx_train, batch=cfg.batch, shuffle=True,
                          seed=c.semilla, num_workers=cfg.num_workers)
@@ -237,6 +242,7 @@ def ejecutar_corrida(c: Corrida, ctx: Contexto, salida: str) -> dict:
         )
         hist.to_csv(os.path.join(carpeta, "historial.csv"), index=False)
         torch.save(pesos, os.path.join(carpeta, "lora_y_cabeza.pt"))
+        params_entrenables = params_lora + sum(p.numel() for p in cabeza.parameters())
 
         primer_bloque = min(c.bloques)
         preds_va, probs_va = predecir_lora(m, cabeza, dl_va, primer_bloque, ctx.device, ctx.amp)
@@ -272,6 +278,16 @@ def ejecutar_corrida(c: Corrida, ctx: Contexto, salida: str) -> dict:
         "bloques": list(c.bloques),
         "proyecciones": list(c.proyecciones),
         "segundos": round(t1 - t0, 1),
+        "parametros_entrenables": int(params_entrenables),
+        "config": {
+            "epocas": cfg.epocas, "lr": cfg.lr, "weight_decay": cfg.weight_decay,
+            "batch": cfg.batch, "img_size": cfg.img_size, "amp": bool(ctx.amp),
+            "grad_scaler": bool(ctx.amp), "semilla_antes_de_lora": True,
+        },
+        "entorno": {
+            "torch": torch.__version__,
+            "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+        },
         "metricas": resultado_metricas,
     }
 

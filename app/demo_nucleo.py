@@ -68,7 +68,9 @@ def cargar_modelos(ruta: str = RUTA_CKPT, device: str = "cpu", modelo_id: str = 
 
 def predecir_imagen(modelos: dict, img: Image.Image, device: str = "cpu", img_size: int | None = None) -> dict:
     if img_size is None:
-        img_size = getattr(modelos["base"].config, "image_size", 224)
+        # Misma resolución que en el entrenamiento (224 px). OJO: config.image_size
+        # de facebook/dinov2-small es 518 y NO es la que se usó para entrenar.
+        img_size = 224 if modelos["base"].config.hidden_size == 384 else modelos["base"].config.image_size
 
     tf = transforms.Compose([
         transforms.Resize((img_size, img_size), interpolation=transforms.InterpolationMode.BICUBIC),

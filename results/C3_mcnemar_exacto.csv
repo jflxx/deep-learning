@@ -1,7 +1,10 @@
-particion,semilla,conjunto,b,c,n_discordantes,p_valor
+particion,semilla,conjunto,solo_base_acierta,solo_lora_acierta,n_discordantes,p_valor
 interna,42,test,51,97,148,0.00019430029159324698
-geo,42,test_fuera,67,161,228,4.165836310876077e-10
 interna,0,test,54,104,158,8.548342922070601e-05
-geo,0,test_fuera,95,211,306,2.85517219690107e-11
 interna,1,test,24,103,127,7.460148976672121e-13
+geo,42,test_dentro,32,48,80,0.09291188222054622
+geo,42,test_fuera,67,161,228,4.165836310876077e-10
+geo,0,test_dentro,29,63,92,0.000509090224349734
+geo,0,test_fuera,95,211,306,2.85517219690107e-11
+geo,1,test_dentro,29,49,78,0.030786495821399938
 geo,1,test_fuera,77,153,230,6.066408952331468e-07

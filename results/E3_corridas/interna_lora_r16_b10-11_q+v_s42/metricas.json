@@ -1,0 +1,27 @@
+{
+  "id": "interna_lora_r16_b10-11_q+v_s42",
+  "experimento": "A3",
+  "particion": "interna",
+  "condicion": "lora",
+  "semilla": 42,
+  "rango": 16,
+  "bloques": [
+    10,
+    11
+  ],
+  "proyecciones": [
+    "q",
+    "v"
+  ],
+  "segundos": 538.0,
+  "metricas": {
+    "val": {
+      "accuracy": 0.9733333333333334,
+      "macro_f1": 0.9722666133692422
+    },
+    "test": {
+      "accuracy": 0.9703703703703703,
+      "macro_f1": 0.9686408443794606
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "interna_base_r8_b10-11_q+v_s42",
+  "experimento": "A2",
+  "particion": "interna",
+  "condicion": "base",
+  "semilla": 42,
+  "rango": 8,
+  "bloques": [
+    10,
+    11
+  ],
+  "proyecciones": [
+    "q",
+    "v"
+  ],
+  "segundos": 80.0,
+  "metricas": {
+    "val": {
+      "accuracy": 0.9629629629629629,
+      "macro_f1": 0.9611081463793691
+    },
+    "test": {
+      "accuracy": 0.9582716049382716,
+      "macro_f1": 0.9559332799792835
+    }
+  }
+}

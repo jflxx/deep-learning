@@ -1,0 +1,33 @@
+{
+  "id": "geo_lora_r8_b8-9-10-11_q+v_s42",
+  "experimento": "A5g",
+  "particion": "geo",
+  "condicion": "lora",
+  "semilla": 42,
+  "rango": 8,
+  "bloques": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "proyecciones": [
+    "q",
+    "v"
+  ],
+  "segundos": 535.0,
+  "metricas": {
+    "val": {
+      "accuracy": 0.9638199411022297,
+      "macro_f1": 0.9485622898139676
+    },
+    "test_dentro": {
+      "accuracy": 0.98,
+      "macro_f1": 0.9791267350901449
+    },
+    "test_fuera": {
+      "accuracy": 0.9488349747778044,
+      "macro_f1": 0.9227197497978441
+    }
+  }
+}
