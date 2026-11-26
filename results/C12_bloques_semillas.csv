@@ -5,6 +5,6 @@ interna,test,1,97.5655,97.6376,0.0721,corregido (D21)
 geo,test_dentro,42,97.1220,97.9127,0.7907,original
 geo,test_fuera,42,90.7910,92.2720,1.4809,original
 geo,test_dentro,0,97.4886,97.6082,0.1196,corregido (D21)
-geo,test_fuera,0,91.8169,92.1039,0.2870,corregido (D21)
-geo,test_dentro,1,97.3567,97.8091,0.4524,corregido (D21)
+geo,test_fuera,0,91.8169,92.1039,0.2869,corregido (D21)
+geo,test_dentro,1,97.3567,97.8091,0.4523,corregido (D21)
 geo,test_fuera,1,91.7534,92.4894,0.7360,corregido (D21)

@@ -51,7 +51,7 @@ Proyecto de la tarea académica final de **1INF52 Deep Learning (PUCP, 2026-2)**
 ├── abstract/                # abstract WAIMLAp 2026 en LaTeX (.tex + figura) y PDF compilado
 ├── docs/                    # informe de avance (Word) y diagrama de Gantt
 ├── splits/                  # coordenadas de EuroSAT (desde EuroSAT MS) y partición geográfica
-├── results/                 # tablas CSV/JSON; E3_corridas/ = las 20 corridas del E3 con sus predicciones
+├── results/                 # tablas CSV/JSON; E3_corridas/ = las 20 corridas del E3; E3_corridas_A5s/ = réplica de 4 bloques (semillas 0 y 1)
 ├── figures/                 # figuras PNG (se generan al ejecutar)
 └── checkpoints/geo_s42/     # cabeza lineal y LoRA (partición geográfica, semilla 42) para la demo
 ```
