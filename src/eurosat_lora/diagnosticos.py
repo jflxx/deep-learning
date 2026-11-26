@@ -8,13 +8,12 @@ import torch.nn as nn
 
 
 def norma_tokens(m: nn.Module, x: torch.Tensor) -> np.ndarray:
-    """Calcula norma L2 por token del último bloque. Devuelve (B, N)."""
+    """Norma L2 por token a la salida del último bloque, ANTES de la LayerNorm final
+    (la norma final reescala cada token y ocultaría los tokens de norma atípica). (B, N+1), incluye CLS."""
     m.eval()
     with torch.no_grad():
-        out = m(x)
-        # last_hidden_state: (B, N+1, D) — incluye CLS
-        h = out.last_hidden_state  # (B, N+1, D)
-        normas = h.norm(dim=-1)    # (B, N+1)
+        h = m(x, output_hidden_states=True).hidden_states[-1]  # (B, N+1, D)
+        normas = h.norm(dim=-1)
     return normas.cpu().numpy()
 
 
